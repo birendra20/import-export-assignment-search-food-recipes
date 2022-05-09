@@ -1,0 +1,28 @@
+#navbar {
+  display: flex;
+  padding-left: 4%;
+  border: solid black 1px;
+  padding-right: 4%;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+#options {
+  display: flex;
+  gap: 20px;
+}
+
+#categories {
+  display: grid;
+  grid-template-columns: repeat(3, 33%);
+  justify-content: center;
+  padding: 5%;
+}
+img {
+  width: 50%;
+}
+.category-box {
+  border: 2px solid black;
+  text-align: center;
+  padding: 1%;
+}

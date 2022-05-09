@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles/index.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="container"></div>
+    <center>
+      <div id="search">
+        <input
+          type="text"
+          id="moviesName"
+          size="100"
+          placeholder="enter food name"
+        />
+        <button id="btn">Search</button>
+      </div>
+    </center>
+    <div id="moviesData"></div>
+  </body>
+</html>
+
+<script type="module">
+  import navbar from "./components/navbar.js";
+  import { getData } from "./scripts/showData.js";
+
+  let container = document.getElementById("container");
+  let data_div = document.getElementById("moviesData");
+  container.innerHTML = navbar();
+  document.getElementById("btn").addEventListener("click", getSearchResults);
+
+  //moviesDataDiv.innerHTML = null;
+
+  async function getSearchResults() {
+    try {
+      let movies = document.getElementById("moviesName").value;
+      let res = await fetch(
+        `https://www.themealdb.com/api/json/v1/1/search.php?f=a`
+      );
+      let response = await res.json();
+
+      //let x = response.data;
+      //appendMovies(x);
+      console.log("response:", response);
+      appendCategories(response.meals);
+    } catch (err) {
+      console.log("err", err);
+    }
+  }
+
+  function appendCategories(category) {
+    let categories = document.getElementById("moviesData");
+
+    category.forEach((e) => {
+      let div = document.createElement("div");
+      div.className = "category-box";
+
+      let h2 = document.createElement("h2");
+      h2.innerText = e.strMeal;
+
+      let img = document.createElement("img");
+      img.src = e.strMealThumb;
+
+      let description = document.createElement("p");
+      description.innerText = e.strInstructions;
+
+      div.append(h2, img, description);
+
+      categories.append(div);
+    });
+  }
+</script>

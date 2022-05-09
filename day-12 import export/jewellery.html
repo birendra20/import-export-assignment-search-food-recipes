@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles/index.css" />
+    <title>Document</title>
+    <style>
+      .fod-box {
+        margin: auto;
+        border: 2px solid black;
+        text-align: justify;
+        padding: 1%;
+      }
+      img,
+      h2 {
+        width: 100%;
+        text-align: center;
+      }
+      #categories {
+        display: grid;
+        grid-template-columns: repeat(1, 60%);
+        justify-content: center;
+        padding: 5%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container"></div>
+    <div id="categories"></div>
+  </body>
+</html>
+
+<script type="module">
+  import navbar from "./components/navbar.js";
+  import { getData } from "./scripts/showData.js";
+
+  let container = document.getElementById("container");
+  let data_div = document.getElementById("data");
+  container.innerHTML = navbar();
+  // let response = getData(
+  //   "https://www.themealdb.com/api/json/v1/1/categories.php"
+  // ); //promise
+
+  // //handling the promise
+  // response
+  //   .then((res) => {
+  //     appendData(res, data_div);
+  //   })
+  //   .catch((err) => {
+  //     console.log("err:", err);
+  //   });
+
+  let data = getData("https://www.themealdb.com/api/json/v1/1/random.php");
+
+  data.then((res) => {
+    console.log(res);
+    appendCategories(res);
+  });
+
+  function appendCategories(e) {
+    let categories = document.getElementById("categories");
+
+    // category.forEach((e) => {
+    let div = document.createElement("div");
+    div.className = "fod-box";
+
+    let h2 = document.createElement("h2");
+    h2.innerText = `${e.meals[0].strMeal}`;
+
+    let img = document.createElement("img");
+    img.src = e.meals[0].strMealThumb;
+
+    let description = document.createElement("p");
+    description.innerText = e.meals[0].strInstructions;
+
+    div.append(h2, img, description);
+
+    categories.append(div);
+    // });
+  }
+</script>
